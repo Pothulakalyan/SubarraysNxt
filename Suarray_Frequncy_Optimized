@@ -1,0 +1,42 @@
+class Solution {
+  public:
+   
+   int freqReturn(map<int,int>mpp){
+       int ans=0,max_freq=0;
+       for(auto it:mpp){
+           if(it.second>max_freq){
+               ans=it.first;
+               max_freq=it.second;
+           }
+           else if(it.second==max_freq && it.first<ans){
+               ans=it.first;
+           }
+       }
+       return ans;
+   }
+    int sumOfModes(vector<int>& arr, int k) {
+        
+        int n=arr.size();
+        long long sum=0;
+        map<int,int>mpp;
+        for(int i=0;i<k;i++){
+            mpp[arr[i]]++;
+        }
+        //till now first k-elements in the mpp;
+        sum+=freqReturn(mpp);
+        
+        //from k-to n sloding window
+        
+        for(int i=k;i<n;i++){
+            mpp[arr[i-k]]--;
+            if(mpp[arr[i-k]]==0){
+                mpp.erase(arr[i-k]);
+            }
+            mpp[arr[i]]++;
+           
+            sum+=freqReturn(mpp);
+        }
+        
+        return sum;
+    }
+};
