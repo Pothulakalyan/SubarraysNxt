@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    int frequency(vector<int>ve){
+        map<int,int>mpp;
+        for(int i=0;i<ve.size();i++){
+            mpp[ve[i]]++;
+        }
+        int ans=0,max_freq=0;
+        for(auto it:mpp){
+            if(it.second>max_freq){
+                ans=it.first;
+                max_freq=it.second;
+            }
+            else if(it.second==max_freq && it.first<ans){
+                ans=it.first;
+            }
+        }
+        return ans;
+        
+    }
+    int sumOfModes(vector<int>& arr, int k) {
+        // code here
+        int n=arr.size();
+        int sum=0;
+        for(int i=0;i<=n-k;i++){
+            vector<int>sub;
+            for(int j=i;j<k+i;j++){
+                sub.push_back(arr[j]);
+            }
+           
+            sum+=frequency(sub);
+        }
+        
+        return sum;
+    }
+};
